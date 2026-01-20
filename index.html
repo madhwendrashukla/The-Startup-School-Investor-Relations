@@ -1,403 +1,596 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investor Relations | The Startup School - Pre-Seed</title>
+    <title>The Startup School | An Alternate B-School</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: {
+                            main: '#0F172A',      // --bg-main
+                            surface: '#1E293B',   // --bg-surface
+                        },
+                        text: {
+                            primary: '#F8FAFC',   // --text-primary
+                            secondary: '#94A3B8', // --text-secondary
+                        },
+                        accent: {
+                            blue: '#8B5CF6',      // Violet-500 (Replaces Blue)
+                            violet: '#D946EF',    // Fuchsia-500 (Replaces Violet for gradient)
+                        },
+                        functional: {
+                            success: '#10B981',   // --color-success
+                            border: '#334155',    // --border-color
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #8B5CF6, #D946EF)',
+                    }
+                }
+            }
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const city = document.getElementById('form-city').value;
+            const email = document.getElementById('form-email').value;
+            const phone = document.getElementById('form-contact').value;
+
+            const subject = "Inquiry for The Startup School";
+            const body = `Name: ${name}%0D%0ACity: ${city}%0D%0AEmail: ${email}%0D%0AContact Number: ${phone}`;
+
+            window.location.href = `mailto:gauravbansal@hundredplus.in?subject=${subject}&body=${body}`;
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // New function to play video inline
+        function playVideo(container, videoId) {
+            // Remove click handler to prevent re-triggering
+            container.onclick = null;
+            container.classList.remove('cursor-pointer');
+            
+            // Using youtube-nocookie and removing restrictive referrer policy to fix Error 153
+            container.innerHTML = `<iframe 
+                width="100%" 
+                height="100%" 
+                src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0" 
+                title="YouTube video player" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                allowfullscreen>
+            </iframe>`;
+        }
+    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --investor-emerald: #10b981;
-            --investor-slate: #64748b;
-            --bg-obsidian: #020202;
-        }
-
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-obsidian);
-            color: #ffffff;
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
-
-        .mono { font-family: 'JetBrains Mono', monospace; }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.5s ease;
+        .manifesto-font {
+            font-family: 'Merriweather', serif;
         }
-
-        .glass-panel:hover {
-            border-color: rgba(16, 185, 129, 0.3);
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         .gradient-text {
-            background: linear-gradient(135deg, #ffffff 30%, var(--investor-emerald) 100%);
+            background: linear-gradient(to right, #8B5CF6, #D946EF);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .impact-card {
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent);
+        .bg-pattern {
+            background-color: #0F172A;
+            background-image: radial-gradient(#334155 1px, transparent 1px), radial-gradient(#334155 1px, #0F172A 1px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+            opacity: 0.3;
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid #334155;
         }
-        .floating { animation: float 6s ease-in-out infinite; }
-
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-bg-main text-text-primary antialiased selection:bg-accent-blue selection:text-white">
 
-    <!-- Navbar -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-6 border-b border-white/5 bg-black/40 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-white rounded flex items-center justify-center font-black text-black">S</div>
-                <div class="flex flex-col">
-                    <span class="text-[10px] font-black tracking-[0.2em] uppercase text-white">Startup School</span>
-                    <span class="text-[9px] text-emerald-500 font-bold uppercase tracking-widest">Pre-Seed IR</span>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-bg-main/90 backdrop-blur-md border-b border-functional-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center flex-shrink-0">
+                    <span class="text-lg md:text-2xl font-black text-text-primary tracking-tighter whitespace-nowrap">THE <span class="text-accent-blue">STARTUP</span> SCHOOL</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">About</a>
+                    <a href="#programs" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">Programs</a>
+                    <a href="#manifesto" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">Manifesto</a>
+                    <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-gradient-primary hover:opacity-90 text-white px-6 py-2.5 rounded-full font-bold transition shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)]">
+                        Connect
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-text-primary hover:text-accent-blue focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
                 </div>
             </div>
-            <div class="hidden lg:flex items-center gap-10">
-                <a href="#vision" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition-colors">The Thesis</a>
-                <a href="#traction" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition-colors">Pilot Results</a>
-                <a href="#ask" class="text-[10px] font-bold uppercase tracking-widest text-gray-500 hover:text-white transition-colors">The Ask</a>
-                <button onclick="toggleModal()" class="px-6 py-2 bg-emerald-600 text-white rounded font-bold text-[10px] uppercase tracking-widest hover:bg-white hover:text-black transition-all">Request Data Room</button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-bg-surface border-t border-functional-border absolute w-full">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">About</a>
+                <a href="#programs" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">Programs</a>
+                <a href="#manifesto" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">Manifesto</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-accent-blue hover:text-accent-violet font-bold">Connect</a>
             </div>
         </div>
     </nav>
 
-    <!-- Impact Hero -->
-    <header class="relative pt-44 pb-32 px-8 overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[800px] bg-[radial-gradient(circle_at_50%_0%,rgba(16,185,129,0.06)_0%,transparent_60%)] -z-10"></div>
-        
-        <div class="max-w-6xl mx-auto">
-            <div class="grid lg:grid-cols-12 gap-20 items-center">
-                <div class="lg:col-span-7 reveal">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[9px] font-bold tracking-widest uppercase text-gray-400 mb-8">
-                        Operational Transparency: Pre-Seed Round
-                    </div>
-                    <h1 class="text-6xl md:text-8xl font-black leading-[0.9] mb-10 tracking-tighter">
-                        Conditioning the <br><span class="gradient-text">Top 1% of Talent.</span>
-                    </h1>
-                    <p class="text-xl text-gray-400 mb-12 max-w-xl leading-relaxed">
-                        Moving beyond theoretical EdTech. We are building a high-fidelity filter and execution engine to solve the founder execution gap in India.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-8 items-start">
-                        <div>
-                            <div class="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em] mb-2">Primary Ask</div>
-                            <div class="text-4xl font-black text-white">₹1.0 Crore</div>
-                        </div>
-                        <div class="w-px h-12 bg-white/10 hidden sm:block"></div>
-                        <div>
-                            <div class="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em] mb-2">Target Valuation</div>
-                            <div class="text-4xl font-black text-white">₹50 Crore</div>
-                        </div>
-                    </div>
-                </div>
+    <!-- 1. Hero Section: The Investment Question -->
+   <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-pattern z-0"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-                <!-- Pilot Summary -->
-                <div class="lg:col-span-5 reveal">
-                    <div class="glass-panel p-10 rounded-[2.5rem] border-white/10">
-                        <h4 class="text-xs font-black uppercase tracking-widest text-emerald-500 mb-8">Pilot Realities</h4>
-                        <div class="space-y-6">
-                            <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                                <span class="text-sm text-gray-500">Revenue (Pilot Phase)</span>
-                                <span class="text-sm font-bold text-white">₹85.4 Lakh</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                                <span class="text-sm text-gray-500">Avg. Application Filter</span>
-                                <span class="text-sm font-bold text-white">Top 4.2%</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                                <span class="text-sm text-gray-500">MVP Completion Rate</span>
-                                <span class="text-sm font-bold text-white">78% (Cohort 01)</span>
-                            </div>
-                            <div class="flex justify-between items-center pb-4 border-b border-white/5">
-                                <span class="text-sm text-gray-500">Hub Interest (Organic)</span>
-                                <span class="text-sm font-bold text-emerald-500">8+ Cities</span>
-                            </div>
-                            <div class="pt-4">
-                                <button onclick="toggleModal()" class="w-full py-4 bg-white text-black font-black rounded-xl text-[10px] uppercase tracking-[0.2em] hover:bg-emerald-500 transition-colors">Vetting & Data Room</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- The Problem & Mission Impact -->
-    <section id="vision" class="py-32 bg-[#050505] relative overflow-hidden">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="grid lg:grid-cols-2 gap-24 items-center">
-                <div class="reveal">
-                    <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-6">The Real Problem</h2>
-                    <h3 class="text-5xl font-black mb-10 leading-tight">Founder readiness is currently <span class="text-gray-500">accidental, not intentional.</span></h3>
-                    <p class="text-lg text-gray-400 leading-relaxed mb-12">
-                        VCs are effectively paying for a founder's "learning curve." Our goal is to shift that burden. We condition founders in a high-pressure environment *before* they raise institutional capital, ensuring every rupee of seed funding goes into growth, not learning.
-                    </p>
-                    <div class="grid sm:grid-cols-2 gap-10">
-                        <div class="space-y-3">
-                            <div class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center">
-                                <i data-lucide="shield-alert" class="text-emerald-500 w-5 h-5"></i>
-                            </div>
-                            <h4 class="font-bold text-white">De-risking 0-to-1</h4>
-                            <p class="text-xs text-gray-600 leading-relaxed">Rigorous validation methods to kill weak ideas before capital burn occurs.</p>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center">
-                                <i data-lucide="activity" class="text-emerald-500 w-5 h-5"></i>
-                            </div>
-                            <h4 class="font-bold text-white">Operational Rigor</h4>
-                            <p class="text-xs text-gray-600 leading-relaxed">Transitioning founders from "thinking like an employee" to "executing like an owner."</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="reveal">
-                    <div class="p-12 glass-panel rounded-[3.5rem] border-white/5">
-                        <h4 class="text-xs font-black uppercase tracking-widest text-emerald-500 mb-10 text-center">Screening & Vetting Process</h4>
-                        <div class="space-y-8 mono text-[11px] text-gray-500">
-                            <div class="flex items-start gap-4">
-                                <span class="text-emerald-500">[01]</span>
-                                <p>Psychometric evaluation for resilience and bias-to-action.</p>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <span class="text-emerald-500">[02]</span>
-                                <p>48-hour "Market Validation" challenge (Pre-admission).</p>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <span class="text-emerald-500">[03]</span>
-                                <p>Interview with operator-mentor (Ex-Founder/Product Lead).</p>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <span class="text-emerald-500">[04]</span>
-                                <p>Commitment Check: Skin-in-the-game fee or equity lock.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pilot Results (Grounded Impact) -->
-    <section id="traction" class="py-32">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="text-center mb-24 reveal">
-                <h2 class="text-xs font-black uppercase tracking-[0.4em] text-emerald-500 mb-6">Initial Proof Points</h2>
-                <h3 class="text-5xl font-black">Pilot Cohort <span class="text-gray-400">Findings.</span></h3>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 mb-24 reveal">
-                <div class="p-10 impact-card rounded-3xl">
-                    <h5 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Operational Output</h5>
-                    <div class="text-5xl font-black mb-4">18+ MVPs</div>
-                    <p class="text-xs text-gray-600 leading-relaxed">Functional products deployed to market during the 12-week pilot, with 40% seeing early user traction.</p>
-                </div>
-                <div class="p-10 impact-card rounded-3xl">
-                    <h5 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Market Demand</h5>
-                    <div class="text-5xl font-black mb-4">₹1.5 Lakh</div>
-                    <p class="text-xs text-gray-600 leading-relaxed">Validated price point per founder, proving significant willingness to pay for high-fidelity conditioning.</p>
-                </div>
-                <div class="p-10 impact-card rounded-3xl">
-                    <h5 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Retention & Focus</h5>
-                    <div class="text-5xl font-black mb-4">88%</div>
-                    <p class="text-xs text-gray-600 leading-relaxed">Cohort retention rate through high-intensity modules, demonstrating high-intent alignment.</p>
-                </div>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-10 items-center reveal">
-                <div class="p-10 glass-panel rounded-3xl border-white/5">
-                    <h4 class="text-lg font-bold mb-6">The Opportunity at Pre-Seed</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed mb-6">
-                        We are entering a market where the gap between "Corporate Tech Talent" and "Operational Founders" is widening. Our pilot has proven that top-tier talent (Ex-Google, Amazon, Tier-1 Consulting) is seeking structured, low-risk (no capital loss) conditioning before committing fully.
-                    </p>
-                    <div class="flex justify-between items-end">
-                        <div class="flex flex-col">
-                            <span class="text-[9px] text-gray-600 font-bold uppercase tracking-widest">Initial Addressable Hubs</span>
-                            <span class="text-2xl font-black text-white">BLR & Delhi-NCR</span>
-                        </div>
-                        <div class="text-[10px] text-emerald-500 font-bold italic">Pilot Revenue: ₹85 Lakh</div>
-                    </div>
-                </div>
-                <div class="p-10 glass-panel rounded-3xl border-white/5 text-center">
-                    <h4 class="text-lg font-bold mb-6 italic">"This isn't just another course. It's an operational filter that India's ecosystem desperately needs to lower failure rates."</h4>
-                    <p class="text-xs text-gray-600">— Initial Advisor & Angel Investor</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Ask & Deployment -->
-    <section id="ask" class="py-32 relative">
-        <div class="max-w-4xl mx-auto px-8 text-center reveal">
-            <h2 class="text-[10px] font-black uppercase tracking-[0.4em] text-emerald-500 mb-6">Pre-Seed Strategy</h2>
-            <h3 class="text-5xl font-black mb-16">₹1.0 Crore Round</h3>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
             
-            <div class="grid md:grid-cols-3 gap-12 text-left mb-20">
-                <div class="space-y-4">
-                    <div class="text-4xl font-black text-white italic">40%</div>
-                    <h5 class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Operator Talent</h5>
-                    <p class="text-xs text-gray-600 leading-relaxed">Hiring 3 Lead Mentors (Ex-Unicorn Founders) to run physical tracks in BLR/NCR.</p>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight mb-12 leading-tight">
+                Which <span class="gradient-text">Investment</span> Makes<br> More Sense To You?
+            </h1>
+
+            <!-- Comparison Cards -->
+            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 mb-12 mt-8">
+                <!-- Option A -->
+                <div class="glass-card rounded-2xl p-8 border border-functional-border text-left hover:border-red-400/50 transition duration-300 relative overflow-hidden">
+                    <!-- Added Badge -->
+                    <div class="absolute top-0 right-0 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">THE JOB SEEKER'S PATH</div>
+                    
+                    <!-- Updated Title -->
+                    <h3 class="text-text-primary font-black uppercase text-2xl tracking-widest mb-6">OPTION A</h3>
+                    
+                    <ul class="space-y-4 text-text-secondary">
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3 text-red-400"></i>
+                            <span>A 2-year traditional B-School education</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-rupee-sign mt-1 mr-3 text-red-400"></i>
+                            <span>Investing <strong class="text-white">Rs. 10–40 lakhs</strong> in B-School degree</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="space-y-4">
-                    <div class="text-4xl font-black text-white italic">35%</div>
-                    <h5 class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Accountability Tech</h5>
-                    <p class="text-xs text-gray-600 leading-relaxed">Building a proprietary tracking system for founder execution analytics.</p>
-                </div>
-                <div class="space-y-4">
-                    <div class="text-4xl font-black text-white italic">25%</div>
-                    <h5 class="text-[10px] font-black uppercase tracking-widest text-emerald-500">Operational GTM</h5>
-                    <p class="text-xs text-gray-600 leading-relaxed">Establishing physical hub presences and campus-level 'Founder Cells'.</p>
+
+                <!-- Option B -->
+                <div class="glass-card rounded-2xl p-8 border border-accent-blue text-left relative overflow-hidden bg-bg-surface/80">
+                     <div class="absolute top-0 right-0 bg-accent-blue text-white text-xs font-bold px-3 py-1 rounded-bl-lg">THE BUILDER'S PATH</div>
+                     
+                     <!-- Updated Title -->
+                     <h3 class="text-accent-blue font-black uppercase text-2xl tracking-widest mb-6">OPTION B</h3>
+                     
+                    <ul class="space-y-4 text-text-primary">
+                        <li class="flex items-start">
+                            <i class="fas fa-rocket mt-1 mr-3 text-functional-success"></i>
+                            <span>Investing 1–2 years building your Startup</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-coins mt-1 mr-3 text-functional-success"></i>
+                            <span>Investing capital in <strong class="text-white">building your startup</strong></span>
+                        </li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="p-12 glass-panel rounded-[3rem] border-emerald-500/10">
-                <h4 class="text-xl font-bold mb-4">Realistic 12-Month Targets</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-                    <div>
-                        <div class="text-xs text-gray-500 uppercase font-bold mb-1">Target Intake</div>
-                        <div class="text-2xl font-black">400 Builders</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-500 uppercase font-bold mb-1">Target Revenue</div>
-                        <div class="text-2xl font-black">₹6.0 Cr</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-500 uppercase font-bold mb-1">Direct Gross Margin</div>
-                        <div class="text-2xl font-black">72%</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-gray-500 uppercase font-bold mb-1">Burn Rate (Post-Hire)</div>
-                        <div class="text-2xl font-black text-white">₹8L / Mo</div>
-                    </div>
-                </div>
-                <button onclick="toggleModal()" class="px-10 py-5 bg-emerald-600 text-white font-black rounded-2xl hover:bg-white hover:text-black transition-all text-sm uppercase tracking-widest shadow-[0_0_50px_rgba(16,185,129,0.2)]">Request Full Term Sheet & Financials</button>
-            </div>
-        </div>
-    </section>
 
-    <!-- Institutional Footer -->
-    <footer class="py-24 border-t border-white/5 bg-black">
-        <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-12">
-            <div>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-8 h-8 bg-white rounded flex items-center justify-center font-black text-black">S</div>
-                    <span class="text-xl font-black uppercase tracking-tighter">Startup School</span>
-                </div>
-                <p class="text-[9px] text-gray-700 font-bold uppercase tracking-[0.2em] max-w-sm leading-loose">
-                    Confidential Pre-Seed Investor Portal. All financial data is internal and subject to formal due diligence.
+            <div class="max-w-3xl mx-auto">
+                <p class="text-xl md:text-2xl text-text-primary font-medium mb-4">
+                    If your answer is <span class="text-accent-blue">building your startup</span>:
+                </p>
+                <p class="text-lg md:text-xl text-text-secondary italic">
+                    "The B-school you wish existed — is being built."
                 </p>
             </div>
-            <div class="text-right">
-                <div class="flex gap-10 text-[9px] font-black uppercase tracking-[0.2em] text-gray-600 mb-4">
-                    <a href="#" class="hover:text-emerald-500">Legal Disclosures</a>
-                    <a href="#" class="hover:text-emerald-500">Cap Table</a>
-                    <a href="#" class="hover:text-emerald-500">Mentorship Network</a>
+        </div>
+    </section>
+
+    <!-- 2. Introduction Section -->
+    <section id="about" class="py-24 relative overflow-hidden border-t border-functional-border">
+        <div class="absolute inset-0 bg-bg-surface/50"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="text-accent-violet font-bold tracking-widest uppercase text-sm mb-4 block">Introducing</span>
+            <h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
+                "THE <span class="gradient-text">STARTUP</span> SCHOOL"
+            </h2>
+            <p class="text-2xl text-text-primary font-light mb-12">
+                An alternate B-School for all Aspiring Founders.
+            </p>
+            
+            <!-- Philosophy Bubbles -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center items-center">
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">Highly Affordable</span>
                 </div>
-                <div class="text-[9px] text-gray-800 font-bold uppercase tracking-widest">
-                    &copy; 2024 The Startup School India.
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">Extremely Time-Saving</span>
                 </div>
+                <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
+                        <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">Live Classroom Programs</span>
+                </div>
+                 <div class="flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <span class="text-lg font-bold text-white">Rigorous and In-depth</span>
+                </div>
+            </div>
+
+            <div class="mt-12">
+                <p class="text-xl md:text-2xl text-accent-blue font-bold italic">
+                    "Your idea shapes into a startup here !"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. The Core Alignment (4 Deadly Gaps) -->
+    <section class="py-20 bg-bg-main">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-text-primary">We Close The 4 Deadly Gaps</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Gap 1 -->
+                <div class="p-6 bg-bg-surface rounded-xl border border-functional-border hover:border-accent-blue transition duration-300 text-center">
+                    <div class="text-3xl text-accent-blue mb-4"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-text-primary">Learning</h3>
+                    <p class="text-text-secondary text-sm">Experiential, Live, In-depth, Outcome-driven.</p>
+                </div>
+                <!-- Gap 2 -->
+                <div class="p-6 bg-bg-surface rounded-xl border border-functional-border hover:border-accent-violet transition duration-300 text-center">
+                    <div class="text-3xl text-accent-violet mb-4"><i class="fas fa-network-wired"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-text-primary">Access</h3>
+                    <p class="text-text-secondary text-sm">To world-class tools, industry network, and intel.</p>
+                </div>
+                <!-- Gap 3 -->
+                <div class="p-6 bg-bg-surface rounded-xl border border-functional-border hover:border-accent-blue transition duration-300 text-center">
+                    <div class="text-3xl text-accent-blue mb-4"><i class="fas fa-user-astronaut"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-text-primary">Mentoring</h3>
+                    <p class="text-text-secondary text-sm">By industry titans.</p>
+                </div>
+                <!-- Gap 4 -->
+                <div class="p-6 bg-bg-surface rounded-xl border border-functional-border hover:border-accent-violet transition duration-300 text-center">
+                    <div class="text-3xl text-accent-violet mb-4"><i class="fas fa-users"></i></div>
+                    <h3 class="text-xl font-bold mb-2 text-text-primary">Community</h3>
+                    <p class="text-text-secondary text-sm">Of believers and co-builders.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Target Audience (Who Is This For?) -->
+    <section class="py-20 bg-bg-surface border-y border-functional-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-text-primary">Inviting all aspiring souls who are ::</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <!-- Persona 1 -->
+                <div class="bg-bg-main border border-functional-border p-8 rounded-xl hover:border-accent-blue transition group cursor-pointer h-full">
+                    <div class="w-12 h-12 bg-bg-surface text-accent-blue rounded-lg flex items-center justify-center text-xl mb-6 border border-functional-border group-hover:bg-accent-blue group-hover:text-white transition">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <p class="text-text-secondary group-hover:text-text-primary transition leading-relaxed">
+                        Passionate about starting something big, but still searching for the right idea.
+                    </p>
+                </div>
+                <!-- Persona 2 -->
+                <div class="bg-bg-main border border-functional-border p-8 rounded-xl hover:border-accent-violet transition group cursor-pointer h-full">
+                    <div class="w-12 h-12 bg-bg-surface text-accent-violet rounded-lg flex items-center justify-center text-xl mb-6 border border-functional-border group-hover:bg-accent-violet group-hover:text-white transition">
+                        <i class="fas fa-chair"></i>
+                    </div>
+                    <p class="text-text-secondary group-hover:text-text-primary transition leading-relaxed">
+                        Sitting on a solid startup idea, yet unsure how to take the first real step.
+                    </p>
+                </div>
+                <!-- Persona 3 -->
+                <div class="bg-bg-main border border-functional-border p-8 rounded-xl hover:border-accent-blue transition group cursor-pointer h-full">
+                    <div class="w-12 h-12 bg-bg-surface text-accent-blue rounded-lg flex items-center justify-center text-xl mb-6 border border-functional-border group-hover:bg-accent-blue group-hover:text-white transition">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <p class="text-text-secondary group-hover:text-text-primary transition leading-relaxed">
+                        Already grinding on an idea, but stuck — wondering how to scale, survive, and win.
+                    </p>
+                </div>
+            </div>
+            <div class="text-center">
+                 <p class="text-xl md:text-2xl text-white font-bold">
+                    For all those who have <span class="text-accent-blue">"KEEDA"</span> and <span class="text-accent-violet">"HIMMAT"</span> :
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Programs Section -->
+    <section id="programs" class="py-24 bg-bg-main">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-text-primary">Programs Launching Soon</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Program 1 -->
+                <div class="bg-bg-surface rounded-2xl p-8 border border-functional-border hover:border-accent-blue transition flex flex-col justify-between">
+                    <div>
+                        <div class="text-accent-blue font-bold text-sm uppercase tracking-wider mb-2">The Spark</div>
+                        <h3 class="text-2xl font-bold text-white mb-4">3-Day Ignition Sprint</h3>
+                        <div class="space-y-2 mb-8">
+                             <div class="flex items-center text-text-secondary text-sm">
+                                <i class="fas fa-map-marker-alt w-6 text-accent-blue"></i> Mumbai
+                            </div>
+                            <div class="flex items-center text-text-secondary text-sm">
+                                <i class="fas fa-map-marker-alt w-6 text-accent-blue"></i> Delhi / NCR
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('contact').scrollIntoView()" class="w-full border border-functional-border text-text-primary font-bold py-3 rounded-lg hover:bg-bg-main transition">Express your Interest</button>
+                </div>
+
+                <!-- Program 2 -->
+                <div class="bg-gradient-primary rounded-2xl p-1 relative overflow-hidden">
+                    <div class="bg-bg-surface h-full rounded-xl p-8 flex flex-col justify-between relative z-10">
+                        <div>
+                            <div class="text-accent-violet font-bold text-sm uppercase tracking-wider mb-2">The Transformation</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">30-Days Deep-Dive Immersion Cohorts</h3>
+                             <div class="space-y-2 mb-8">
+                                <div class="flex items-center text-text-secondary text-sm">
+                                    <i class="fas fa-map-marker-alt w-6 text-accent-violet"></i> Mumbai
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="document.getElementById('contact').scrollIntoView()" class="w-full bg-accent-blue text-white font-bold py-3 rounded-lg hover:bg-accent-violet transition">Express your Interest</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 6. Call to Action -->
+            <div class="text-center mt-12">
+                 <p class="text-text-primary font-medium mb-4">For passionate souls:</p>
+                 <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-accent-blue text-white px-8 py-3 rounded-full font-bold shadow-[0_0_20px_rgba(59,130,246,0.4)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] hover:bg-accent-violet transition transform hover:-translate-y-1">
+                    Drop your contact here <i class="fas fa-arrow-down ml-1"></i>
+                 </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Manifesto Section -->
+    <section id="manifesto" class="py-24 bg-bg-surface relative overflow-hidden border-t border-functional-border">
+        <!-- Decorative bg elements -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-accent-violet/10 rounded-full blur-3xl opacity-30"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-accent-blue/10 rounded-full blur-3xl opacity-30"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
+                <span class="text-accent-blue font-bold tracking-widest uppercase text-xs border border-accent-blue/30 px-3 py-1 rounded-full">The Founder’s Manifesto</span>
+            </div>
+
+            <!-- Founder Details -->
+            <div class="mb-10 flex flex-col md:flex-row items-start md:items-center justify-start gap-6">
+                <div class="w-20 h-20 rounded-full bg-gradient-primary p-1 flex-shrink-0">
+                    <img src="gaurav.jpg" alt="Gaurav Bansal" class="w-full h-full rounded-full object-cover" onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Gaurav+Bansal&background=0D8ABC&color=fff';">
+                </div>
+                <div class="text-left">
+                    <h4 class="text-2xl font-bold text-white">Gaurav Bansal</h4>
+                    <a href="https://www.linkedin.com/in/gauravbansal2/" target="_blank" class="text-accent-blue hover:text-white transition inline-flex items-center gap-2 mt-1">
+                        <i class="fab fa-linkedin text-xl"></i> 
+                        <span>Connect on LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Text Content -->
+            <div class="manifesto-font text-lg md:text-xl text-text-secondary leading-relaxed space-y-6 text-justify border-l-4 border-accent-blue pl-6 md:pl-10">
+                <!-- Hindi Quote -->
+                <h3 class="text-2xl md:text-3xl font-bold text-white leading-relaxed mb-6 not-italic">
+                    “दिल में हो आग तो जलती रहनी चाहिए,<br> 
+                    तेरा हो चाहे मेरा,<br>
+                    <span class="text-accent-violet">सपना ज़िंदा रहना चाहिए!</span>”
+                </h3>
+
+                <p>Startups in India aren't built in garages; they are built at <strong class="text-text-primary">kitchen tables</strong> amidst family debates, silent sacrifices, and financial anxiety.</p>
+
+                <p>In a country like <strong class="text-text-primary">BHARAT</strong>, the “Opportunity Cost” isn't just a line on a spreadsheet — it is a weight on a founder’s soul.</p>
+
+                <p>For the middle-class dreamer, choosing a startup over a steady paycheck is an act of war against social security.</p>
+
+                <p>A startup’s greatest enemy isn't competition — it’s the <strong class="text-text-primary">“Initial Days Vacuum”</strong>. We talk about “funding”, but we forget about “foundation”.</p>
+
+                <p>Many have the <em class="text-white">‘Keeda’</em> (the itch) and the <em class="text-white">‘Himmat’</em> (the courage), but courage without a compass is just a slow way to get lost.</p>
+
+                <p>The ecosystem treats early-stage startups like athletes; in reality, they need to be treated like infants.</p>
+
+                <p>If you don't hold the hand that is trying to build, that hand will eventually reach for a corporate cubicle just to survive.</p>
+
+                <p>I believe tactical, hands-on support in the first 100 days is more valuable than a seed check in the first 300.</p>
+
+                <p>Outliers don’t die because they lack talent — they die because they lack a map.</p>
+
+                <p>If we provide the right scaffolding to the aspiring founder, we won't just see more startups — we will unlock an era of <strong class="text-white">unstoppable builders.</strong></p>
+
+                <p>It doesn’t matter whose hand holds the torch, as long as the darkness is defeated.</p>
+
+                <p>I am not here to just invest; I am here to ensure the fire doesn't go out before the sun rises.</p>
+
+                       <p class="font-bold text-accent-blue italic text-xl mt-6 block">
+  “I lost my startup so that you don't have to lose yours.<br>
+  My failure was a lesson;<br>
+  My mission is your success.”
+</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 8. Founder's Work & Proof Section (Founder Media) -->
+    <section class="py-20 bg-black text-text-primary border-t border-functional-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                 <!-- <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">FOUNDER’S WORK & PROOF</h2> -->
+                <p class="text-text-secondary max-w-3xl mx-auto">
+                    This school is not built on theory.<br>
+                    It is built on lived experience, scars, and lessons earned the hard way.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Block 1: The Bootcamp -->
+                <div class="bg-bg-surface border border-functional-border rounded-xl p-6 hover:border-accent-blue transition group flex flex-col h-full">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Mentor Panel: E-Cell IIT Madras</h3>
+                    <div class="aspect-video bg-bg-main rounded-lg mb-6 flex items-center justify-center border border-functional-border group-hover:border-accent-blue/50 transition relative overflow-hidden">
+                         <img src="bootcamp.jpeg" alt="Mentor Panel at IIT Madras" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-300">
+                    </div>
+                    
+                      <p class="text-text-secondary text-sm mb-6 flex-grow">
+                        Invited as a Mentor at E-Cell IIT Madras. Mentoring early-stage founders, reviewing startup ideas, and providing practical guidance on execution and validation.
+                    </p>
+                    <a href="https://www.linkedin.com/posts/gauravbansal2_mentor-iit-startup-activity-7404790908174450688-P0G5?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAADU8MA4Bu-Z-EZKMZRNCs9TMRf6ND89yVds" target="_blank" class="block w-full text-center border border-functional-border text-text-primary font-bold py-3 rounded-lg hover:bg-bg-main hover:text-accent-blue transition">
+                        <i class="fab fa-linkedin mr-2"></i> Explore More
+                    </a>
+                </div>
+
+                <!-- Block 2: IIM Rohtak -->
+                <div class="bg-bg-surface border border-functional-border rounded-xl p-6 hover:border-accent-violet transition group flex flex-col h-full">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">IIM ROHTAK: JUDGE & MENTOR</h3>
+                    <div class="aspect-video bg-bg-main rounded-lg mb-6 flex items-center justify-center border border-functional-border group-hover:border-accent-violet/50 transition relative overflow-hidden">
+                         <!-- Image for IIM Rohtak -->
+                         <img src="iimrohtak.jpg" alt="Judge and Mentor at IIM Rohtak" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-300">
+                    </div>
+                    <p class="text-text-secondary text-sm mb-6 flex-grow">
+                        Invited as a Judge and Mentor at IIM Rohtak. Evaluating innovative startups, providing critical feedback on pitches, and guiding aspiring founders on their journey from concept to scale.
+                    </p>
+                    <a href="https://www.linkedin.com/in/gauravbansal2/details/featured/" target="_blank" class="block w-full text-center border border-functional-border text-text-primary font-bold py-3 rounded-lg hover:bg-bg-main hover:text-accent-violet transition">
+                        <i class="fab fa-linkedin mr-2"></i> View on LinkedIn
+                    </a>
+                </div>
+
+                <!-- Block 3: YouTube Video -->
+                <div class="bg-bg-surface border border-functional-border rounded-xl p-6 hover:border-red-500 transition group flex flex-col h-full">
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">SESSION AT DOON B. SCHOOL</h3>
+                    
+                    <!-- Added onclick event to play video in place -->
+                    <div onclick="playVideo(this, 'tt_PVE_A3wU')" class="cursor-pointer aspect-video bg-bg-main rounded-lg mb-6 flex items-center justify-center border border-functional-border group-hover:border-red-500/50 transition relative overflow-hidden">
+                         <!-- Real YouTube Thumbnail -->
+                         <img src="https://img.youtube.com/vi/tt_PVE_A3wU/hqdefault.jpg" alt="Session Thumbnail" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-300">
+                         
+                         <!-- Play Button Overlay -->
+                         <div class="absolute inset-0 flex items-center justify-center z-10">
+                            <div class="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition duration-300">
+                                <i class="fas fa-play text-white ml-1 text-lg"></i>
+                            </div>
+                         </div>
+                    </div>
+                    
+                    <p class="text-text-secondary text-sm mb-6 flex-grow">
+                        How to Ideate, Build and Scale your Startup | Hacks and Mistakes.<br>
+                        <span class="text-xs text-gray-500 mt-2 block">Conducted at Doon Business School.</span>
+                    </p>
+                    <a href="https://www.youtube.com/watch?v=tt_PVE_A3wU" target="_blank" class="block w-full text-center border border-functional-border text-text-primary font-bold py-3 rounded-lg hover:bg-bg-main hover:text-red-500 hover:border-red-500 transition">
+                        <i class="fab fa-youtube mr-2"></i> Watch on YouTube
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Contact / Next Steps -->
+    <section id="contact" class="py-24 bg-gradient-to-b from-bg-main to-black border-t border-functional-border">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl shadow-2xl p-8 md:p-12 border border-functional-border relative overflow-hidden">
+                 <!-- subtle glow behind form -->
+                <div class="absolute -top-24 -right-24 w-64 h-64 bg-accent-violet/20 rounded-full blur-[80px]"></div>
+
+                <div class="text-center mb-10 relative z-10">
+                    <h2 class="text-3xl font-bold text-text-primary mb-2">To Know More About Our Programs</h2>
+                    <p class="text-text-secondary">Drop your contact details below.</p>
+                </div>
+
+                <form class="space-y-6 relative z-10" onsubmit="handleFormSubmit(event)">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-text-secondary mb-1">Name</label>
+                            <input type="text" id="form-name" placeholder="Your Full Name" class="w-full px-4 py-3 rounded-lg bg-bg-main border border-functional-border text-text-primary placeholder-gray-600 focus:ring-2 focus:ring-accent-blue focus:border-transparent outline-none transition" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-text-secondary mb-1">City</label>
+                            <input type="text" id="form-city" placeholder="e.g. Mumbai, Delhi" class="w-full px-4 py-3 rounded-lg bg-bg-main border border-functional-border text-text-primary placeholder-gray-600 focus:ring-2 focus:ring-accent-blue focus:border-transparent outline-none transition" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-secondary mb-1">Email Address</label>
+                        <input type="email" id="form-email" placeholder="you@example.com" class="w-full px-4 py-3 rounded-lg bg-bg-main border border-functional-border text-text-primary placeholder-gray-600 focus:ring-2 focus:ring-accent-blue focus:border-transparent outline-none transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-secondary mb-1">Contact Number</label>
+                        <input type="tel" id="form-contact" placeholder="+91 XXXXX XXXXX" class="w-full px-4 py-3 rounded-lg bg-bg-main border border-functional-border text-text-primary placeholder-gray-600 focus:ring-2 focus:ring-accent-blue focus:border-transparent outline-none transition" required>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-primary text-white font-bold py-4 rounded-lg hover:opacity-90 shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition transform hover:-translate-y-1">
+                        Submit
+                    </button>
+                    <p class="text-xs text-center text-gray-500 mt-4">We respect your privacy. No spam, only fire.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-text-secondary py-12 border-t border-functional-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-2xl font-black text-text-primary tracking-tighter">THE <span class="text-accent-blue">STARTUP</span> SCHOOL</span>
+                    <p class="mt-2 text-sm">Stay tuned for more details …</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-twitter text-xl"></i></a>
+                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-instagram text-xl"></i></a>
+                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-youtube text-xl"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-functional-border text-center text-sm">
+                <p>&copy; 2026 The Startup School. All rights reserved.</p>
+                <p class="mt-2 italic">"My mission is your Success."</p>
             </div>
         </div>
     </footer>
 
-    <!-- Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 z-[100] hidden bg-black/98 backdrop-blur-3xl flex items-center justify-center p-6">
-        <div class="max-w-xl w-full glass-panel p-12 rounded-[3.5rem] relative">
-            <button onclick="toggleModal()" class="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors">
-                <i data-lucide="x"></i>
-            </button>
-            <div id="form-view">
-                <h3 class="text-4xl font-black mb-4 text-white">Verify <br><span class="text-emerald-500">Investor Status.</span></h3>
-                <p class="text-sm text-gray-400 mb-10 leading-relaxed">Financial models and cap tables are restricted to verified institutional and accredited angel investors. Please provide your professional details.</p>
-                <form onsubmit="handleRequest(event)" class="space-y-4">
-                    <div class="space-y-1">
-                        <label class="text-[9px] font-black text-gray-600 uppercase tracking-widest">Firm / Personal Brand</label>
-                        <input type="text" required placeholder="Investor Name" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-sm focus:border-emerald-500 outline-none transition-all">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-[9px] font-black text-gray-600 uppercase tracking-widest">Professional Email</label>
-                        <input type="email" required placeholder="name@firm.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-sm focus:border-emerald-500 outline-none transition-all">
-                    </div>
-                    <button class="w-full py-5 bg-emerald-600 text-white font-black rounded-2xl hover:bg-white hover:text-black transition-all text-lg mt-6">
-                        Access Data Room
-                    </button>
-                </form>
-            </div>
-            <div id="success-view" class="hidden text-center py-10">
-                <div class="w-24 h-24 bg-emerald-500/20 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-8">
-                    <i data-lucide="check" class="w-12 h-12"></i>
-                </div>
-                <h3 class="text-3xl font-black mb-4 text-white">Vetting Started.</h3>
-                <p class="text-gray-500 text-sm leading-relaxed mb-10">Our IR team will verify your credentials. Expect the secure link to the Data Room within 2-4 business hours.</p>
-                <button onclick="toggleModal()" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-600 hover:text-white underline underline-offset-8">Return to Portal</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        lucide.createIcons();
-
-        // Reveal logic
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Modal Logic
-        function toggleModal() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.toggle('hidden');
-            document.body.style.overflow = modal.classList.contains('hidden') ? 'auto' : 'hidden';
-            if (modal.classList.contains('hidden')) {
-                setTimeout(() => {
-                    document.getElementById('form-view').classList.remove('hidden');
-                    document.getElementById('success-view').classList.add('hidden');
-                }, 400);
-            }
-        }
-
-        // Handle Form
-        function handleRequest(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            btn.innerText = 'VETTING...';
-            btn.disabled = true;
-            setTimeout(() => {
-                document.getElementById('form-view').classList.add('hidden');
-                document.getElementById('success-view').classList.remove('hidden');
-                lucide.createIcons();
-            }, 1800);
-        }
-    </script>
 </body>
 </html>
+
