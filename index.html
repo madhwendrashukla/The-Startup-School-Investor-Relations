@@ -19,8 +19,8 @@
                             secondary: '#94A3B8', // --text-secondary
                         },
                         accent: {
-                            blue: '#8B5CF6',      // Violet-500 (Replaces Blue)
-                            violet: '#D946EF',    // Fuchsia-500 (Replaces Violet for gradient)
+                            blue: '#8B5CF6',      // Violet-500
+                            violet: '#D946EF',    // Fuchsia-500
                         },
                         functional: {
                             success: '#10B981',   // --color-success
@@ -33,10 +33,192 @@
                     },
                     backgroundImage: {
                         'gradient-primary': 'linear-gradient(135deg, #8B5CF6, #D946EF)',
+                    },
+                    animation: {
+                        'scroll-left': 'scrollLeft 40s linear infinite',
+                        'scroll-right': 'scrollRight 40s linear infinite',
+                    },
+                    keyframes: {
+                        scrollLeft: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        scrollRight: {
+                            '0%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(0)' },
+                        }
                     }
                 }
             }
         }
+
+        // --- MENTOR SYSTEM LOGIC ---
+
+        class MentorProfile {
+            // Updated Constructor to accept imageLink explicitly
+            constructor(name, title, credentials, imageLink) {
+                this.name = name;
+                this.title = title;
+                this.credentials = credentials;
+                // If imageLink is provided, use it. Otherwise, generate a default avatar.
+                this.image = imageLink ? imageLink : `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1E293B&color=8B5CF6&size=200&font-size=0.33`;
+            }
+        }
+
+        // Expanded Data Source: 10 Mentors with Image Links
+        // NOTE: Replace 'null' with the actual image URL string (e.g., "https://example.com/photo.jpg")
+        const mentorsData = [
+            new MentorProfile(
+                "Kunal Shah", 
+                "Founder, CRED", 
+                [
+                    "Revolutionizing trust-based wealth management and credit in India.",
+                    "Advisor to Sequoia Capital and AngelList.",
+                    "One of India's most active angel investors with a keen eye for consumer behavior."
+                ],
+               "https://www.livemint.com/lm-img/img/2025/07/06/original/3-0-77820093-Kunal-Shah-10-20190627-JM-0_1679797689961_1751802998668.JPG" // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Vidit Aatrey", 
+                "Founder, Meesho", 
+                [
+                    "Democratizing internet commerce for small businesses across Bharat.",
+                    "IIT Delhi Alumnus and Y Combinator graduate.",
+                    "Built a unicorn by empowering millions of female entrepreneurs."
+                ],
+                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Vijay Shekhar", 
+                "Founder, Paytm", 
+                [
+                    "The pioneer of the digital payments revolution in India.",
+                    "Delhi College of Engineering Alumnus.",
+                    "Built one of India's largest fintech ecosystems from scratch."
+                ],
+                null // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Mekin M", 
+                "Founder, Udhyam", 
+                [
+                    "Former Chief People Officer at Flipkart who built their early culture.",
+                    "Now focused on social entrepreneurship and grassroots learning.",
+                    "Passionate about unlocking human potential at scale."
+                ],
+                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Deepinder Goyal", 
+                "Founder, Zomato", 
+                [
+                    "Redefined food delivery and restaurant discovery in India.",
+                    "Known for obsession with design and customer experience.",
+                    "Successfully led Zomato to a massive public market debut."
+                ],
+                null // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Ritesh Agarwal", 
+                "Founder, OYO", 
+                [
+                    "One of the world's youngest self-made billionaires.",
+                    "Thiel Fellow who transformed the global hospitality landscape.",
+                    "Scaled OYO to over 80 countries with sheer grit and execution."
+                ],
+                null // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Nithin Kamath", 
+                "Founder, Zerodha", 
+                [
+                    "Bootstrapped India's largest stock broker without external funding.",
+                    "A trading titan who changed how Indians invest.",
+                    "Founder of Rainmatter, supporting fintech and climate startups."
+                ],
+                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Falguni Nayar", 
+                "Founder, Nykaa", 
+                [
+                    "Former Investment Banker turned beauty commerce mogul.",
+                    "Built a profitable unicorn with a relentless focus on brand.",
+                    "A symbol of self-made success and female leadership in India."
+                ],
+                null // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Bhavish Aggarwal", 
+                "Founder, Ola", 
+                [
+                    "Revolutionized urban mobility in India with Ola Cabs.",
+                    "Now leading India's EV revolution with Ola Electric.",
+                    "A master of scaling complex operations in tough markets."
+                ],
+                null // <--- PASTE IMAGE LINK HERE
+            ),
+            new MentorProfile(
+                "Sanjeev Bikhchandani", 
+                "Founder, Info Edge", 
+                [
+                    "The Godfather of Indian Internet Startups (Naukri.com).",
+                    "Pioneered the consumer internet space in the 90s.",
+                    "Key investor behind Zomato and PolicyBazaar."
+                ],
+                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+            )
+        ];
+
+        // Function to create card HTML
+        function createMentorCard(mentor) {
+            // Join credentials into a cohesive paragraph
+            const description = mentor.credentials.join(" ");
+
+            return `
+                <div class="glass-card w-[400px] flex-shrink-0 rounded-2xl p-6 border border-functional-border hover:border-accent-violet transition duration-300 group flex flex-col mx-4 select-none h-full bg-bg-surface/50">
+                    <div class="flex items-start gap-4 mb-5">
+                        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-br from-accent-blue to-accent-violet flex-shrink-0 shadow-lg shadow-accent-blue/20">
+                            <!-- Image Loaded Here -->
+                            <img src="${mentor.image}" alt="${mentor.name}" class="w-full h-full rounded-full object-cover bg-bg-main">
+                        </div>
+                        <div class="pt-1">
+                            <h3 class="text-xl font-bold text-white group-hover:text-accent-violet transition truncate w-56">${mentor.name}</h3>
+                            <p class="gradient-text text-sm font-bold uppercase tracking-wider truncate w-56">${mentor.title}</p>
+                        </div>
+                    </div>
+                    <div class="flex-grow border-t border-functional-border/50 pt-4">
+                        <p class="text-text-secondary text-sm leading-relaxed font-light">
+                            ${description}
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Scrolling Rows
+        function renderMentors() {
+            const row1Container = document.getElementById('scroll-row-1');
+            const row2Container = document.getElementById('scroll-row-2');
+            
+            if (!row1Container || !row2Container) return;
+
+            // Logic: Split based on total length. 
+            // If length is odd (e.g., 11), Math.ceil(5.5) = 6. First row gets 6, Second gets 5.
+            const splitIndex = Math.ceil(mentorsData.length / 2);
+            
+            const firstHalf = mentorsData.slice(0, splitIndex);
+            const secondHalf = mentorsData.slice(splitIndex);
+
+            // Duplicate arrays to create seamless loop (Original + Copy)
+            const row1Content = [...firstHalf, ...firstHalf, ...firstHalf, ...firstHalf].map(createMentorCard).join('');
+            const row2Content = [...secondHalf, ...secondHalf, ...secondHalf, ...secondHalf].map(createMentorCard).join('');
+
+            row1Container.innerHTML = row1Content;
+            row2Container.innerHTML = row2Content;
+        }
+
+        // --- END MENTOR SYSTEM LOGIC ---
 
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -56,13 +238,10 @@
             menu.classList.toggle('hidden');
         }
 
-        // New function to play video inline
         function playVideo(container, videoId) {
-            // Remove click handler to prevent re-triggering
             container.onclick = null;
             container.classList.remove('cursor-pointer');
             
-            // Using youtube-nocookie and removing restrictive referrer policy to fix Error 153
             container.innerHTML = `<iframe 
                 width="100%" 
                 height="100%" 
@@ -73,6 +252,11 @@
                 allowfullscreen>
             </iframe>`;
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderMentors();
+        });
+
     </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
@@ -102,6 +286,21 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid #334155;
         }
+        
+        /* Pause Animation on Hover */
+        .pause-on-hover:hover .animate-scroll-left,
+        .pause-on-hover:hover .animate-scroll-right {
+            animation-play-state: paused;
+        }
+
+        /* Hide Scrollbars */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-bg-main text-text-primary antialiased selection:bg-accent-blue selection:text-white">
@@ -110,22 +309,18 @@
     <nav class="fixed w-full z-50 bg-bg-main/90 backdrop-blur-md border-b border-functional-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
                 <div class="flex items-center flex-shrink-0">
                     <span class="text-lg md:text-2xl font-black text-text-primary tracking-tighter whitespace-nowrap">THE <span class="text-accent-blue">STARTUP</span> SCHOOL</span>
                 </div>
-
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#about" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">About</a>
+                    <a href="#mentors" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">Mentors</a>
                     <a href="#programs" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">Programs</a>
                     <a href="#manifesto" class="text-text-secondary hover:text-accent-blue font-medium transition duration-300">Manifesto</a>
                     <button onclick="document.getElementById('contact').scrollIntoView()" class="bg-gradient-primary hover:opacity-90 text-white px-6 py-2.5 rounded-full font-bold transition shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_25px_rgba(217,70,239,0.5)]">
                         Connect
                     </button>
                 </div>
-
-                <!-- Mobile Menu Button (Hamburger) -->
                 <div class="md:hidden flex items-center">
                     <button onclick="toggleMobileMenu()" class="text-text-primary hover:text-accent-blue focus:outline-none">
                         <i class="fas fa-bars text-2xl"></i>
@@ -133,11 +328,10 @@
                 </div>
             </div>
         </div>
-
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden bg-bg-surface border-t border-functional-border absolute w-full">
             <div class="px-4 pt-2 pb-4 space-y-1">
                 <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">About</a>
+                <a href="#mentors" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">Mentors</a>
                 <a href="#programs" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">Programs</a>
                 <a href="#manifesto" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-text-primary hover:text-white hover:bg-bg-main">Manifesto</a>
                 <a href="#contact" onclick="toggleMobileMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-accent-blue hover:text-accent-violet font-bold">Connect</a>
@@ -145,27 +339,21 @@
         </div>
     </nav>
 
-    <!-- 1. Hero Section: The Investment Question -->
-   <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-20 overflow-hidden">
+    <!-- 1. Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-20 overflow-hidden">
         <div class="absolute inset-0 bg-pattern z-0"></div>
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-blue/20 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-text-primary tracking-tight mb-12 leading-tight">
                 Which <span class="gradient-text">Investment</span> Makes<br> More Sense To You?
             </h1>
 
-            <!-- Comparison Cards -->
             <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 mb-12 mt-8">
                 <!-- Option A -->
                 <div class="glass-card rounded-2xl p-8 border border-functional-border text-left hover:border-red-400/50 transition duration-300 relative overflow-hidden">
-                    <!-- Added Badge -->
                     <div class="absolute top-0 right-0 bg-gray-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">THE JOB SEEKER'S PATH</div>
-                    
-                    <!-- Updated Title -->
                     <h3 class="text-text-primary font-black uppercase text-2xl tracking-widest mb-6">OPTION A</h3>
-                    
                     <ul class="space-y-4 text-text-secondary">
                         <li class="flex items-start">
                             <i class="fas fa-clock mt-1 mr-3 text-red-400"></i>
@@ -181,10 +369,7 @@
                 <!-- Option B -->
                 <div class="glass-card rounded-2xl p-8 border border-accent-blue text-left relative overflow-hidden bg-bg-surface/80">
                       <div class="absolute top-0 right-0 bg-accent-blue text-white text-xs font-bold px-3 py-1 rounded-bl-lg">THE BUILDER'S PATH</div>
-                      
-                      <!-- Updated Title -->
                       <h3 class="text-accent-blue font-black uppercase text-2xl tracking-widest mb-6">OPTION B</h3>
-                      
                     <ul class="space-y-4 text-text-primary">
                         <li class="flex items-start">
                             <i class="fas fa-rocket mt-1 mr-3 text-functional-success"></i>
@@ -197,9 +382,6 @@
                     </ul>
                 </div>
             </div>
-            
-            <!-- Removed the bottom text block as requested -->
-
         </div>
     </section>
 
@@ -207,9 +389,7 @@
     <section id="about" class="py-24 relative overflow-hidden border-t border-functional-border">
         <div class="absolute inset-0 bg-bg-surface/50"></div>
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <!-- Increased font size to text-2xl as requested -->
-            <span class="text-accent-violet font-bold tracking-widest uppercase text-2xl mb-6 block">Introducing</span>
-            
+            <span class="text-accent-violet font-bold tracking-widest uppercase text-sm mb-4 block">Introducing</span>
             <h2 class="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
                 "THE <span class="gradient-text">STARTUP</span> SCHOOL"
             </h2>
@@ -217,7 +397,6 @@
                 An alternate B-School for all Aspiring Founders.
             </p>
             
-            <!-- Philosophy Bubbles -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center items-center">
                 <div class="flex flex-col items-center gap-3">
                     <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
@@ -235,7 +414,6 @@
                     <div class="w-12 h-12 rounded-full bg-functional-success/20 flex items-center justify-center text-functional-success text-xl">
                         <i class="fas fa-chalkboard"></i>
                     </div>
-                    <!-- Added whitespace-nowrap to keep it in one line -->
                     <span class="text-lg font-bold text-white whitespace-nowrap">Live Classroom Programs</span>
                 </div>
                  <div class="flex flex-col items-center gap-3">
@@ -247,9 +425,8 @@
             </div>
 
             <div class="mt-12">
-                <!-- Applied gradient-text class here -->
                 <p class="text-xl md:text-2xl gradient-text font-bold italic">
-                    "Your idea shapes into a startup here !"
+                    "Your Idea shapes into a Startup here."
                 </p>
             </div>
         </div>
@@ -291,8 +468,44 @@
         </div>
     </section>
 
+    <!-- NEW SECTION: Mentors (Updated with Infinite Scroll) -->
+    <section id="mentors" class="py-24 bg-bg-surface border-y border-functional-border relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute -left-20 top-1/4 w-80 h-80 bg-accent-blue/10 rounded-full blur-[80px]"></div>
+        <div class="absolute -right-20 bottom-1/4 w-80 h-80 bg-accent-violet/10 rounded-full blur-[80px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-6 leading-tight">
+                    Where Founders, Skilled Professionals, Business Leaders and Researchers <span class="gradient-text">Shape the Next Generation</span>
+                </h2>
+            </div>
+
+            <!-- Scroll Container -->
+            <div class="relative w-full overflow-hidden space-y-8">
+                
+                <!-- Row 1: Scroll Left -->
+                <div class="pause-on-hover relative flex overflow-hidden w-full">
+                     <!-- Inner Track -->
+                    <div id="scroll-row-1" class="flex animate-scroll-left w-max">
+                        <!-- Content Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Row 2: Scroll Right -->
+                <div class="pause-on-hover relative flex overflow-hidden w-full">
+                     <!-- Inner Track -->
+                    <div id="scroll-row-2" class="flex animate-scroll-right w-max">
+                         <!-- Content Injected via JS -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <!-- 4. Target Audience (Who Is This For?) -->
-    <section class="py-20 bg-bg-surface border-y border-functional-border">
+    <section class="py-20 bg-bg-surface border-b border-functional-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h2 class="text-3xl font-bold text-text-primary">Inviting all aspiring souls who are ::</h2>
