@@ -291,11 +291,23 @@
             border: 1px solid #334155;
         }
         
-        /* Pause Animation on Hover */
-        .pause-on-hover:hover .animate-scroll-left,
-        .pause-on-hover:hover .animate-scroll-right {
-            animation-play-state: paused;
+        /* --- ANIMATION LOGIC UPDATE --- */
+
+        /* 1. Desktop Only: Pause on Hover (Requires a mouse) */
+        @media (hover: hover) {
+            .pause-on-hover:hover .animate-scroll-left,
+            .pause-on-hover:hover .animate-scroll-right {
+                animation-play-state: paused;
+            }
         }
+
+        /* 2. All Devices: Manual Pause Class (Toggled via JS Click) */
+        .is-paused .animate-scroll-left,
+        .is-paused .animate-scroll-right {
+            animation-play-state: paused !important;
+        }
+
+        /* --- END ANIMATION UPDATE --- */
 
         /* Hide Scrollbars */
         .no-scrollbar::-webkit-scrollbar {
@@ -494,10 +506,11 @@
             </div>
 
             <!-- Scroll Container -->
+            <!-- ADDED onclick="this.classList.toggle('is-paused')" for mobile toggle -->
             <div class="relative w-full overflow-hidden space-y-8">
                 
                 <!-- Row 1: Scroll Left -->
-                <div class="pause-on-hover relative flex overflow-hidden w-full">
+                <div class="pause-on-hover relative flex overflow-hidden w-full cursor-pointer" onclick="this.classList.toggle('is-paused')">
                       <!-- Inner Track -->
                     <div id="scroll-row-1" class="flex animate-scroll-left w-max">
                         <!-- Content Injected via JS -->
@@ -505,7 +518,7 @@
                 </div>
 
                 <!-- Row 2: Scroll Right -->
-                <div class="pause-on-hover relative flex overflow-hidden w-full">
+                <div class="pause-on-hover relative flex overflow-hidden w-full cursor-pointer" onclick="this.classList.toggle('is-paused')">
                       <!-- Inner Track -->
                     <div id="scroll-row-2" class="flex animate-scroll-right w-max">
                           <!-- Content Injected via JS -->
@@ -669,11 +682,11 @@
 
                 <p>I am not here to just invest; I am here to ensure the fire doesn't go out before the sun rises.</p>
 
-                        <p class="font-bold text-accent-blue italic text-xl mt-6 block">
-  “I lost my startup so that you don't have to lose yours.<br>
-  My failure was a lesson;<br>
-  My mission is your success.”
-</p>
+                <p class="font-bold text-accent-blue italic text-xl mt-6 block">
+                  “I lost my startup so that you don't have to lose yours.<br>
+                  My failure was a lesson;<br>
+                  My mission is your success.”
+                </p>
             </div>
 
         </div>
