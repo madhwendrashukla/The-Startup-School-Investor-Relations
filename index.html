@@ -55,140 +55,146 @@
         // --- MENTOR SYSTEM LOGIC ---
 
         class MentorProfile {
-            // Updated Constructor to accept imageLink explicitly
-            constructor(name, title, credentials, imageLink) {
+            // Updated Constructor to include LinkedIn URL
+            constructor(name, title, credentials, imageFileName, linkedinUrl) {
                 this.name = name;
                 this.title = title;
-                this.credentials = credentials;
-                // If imageLink is provided, use it. Otherwise, generate a default avatar.
-                this.image = imageLink ? imageLink : `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1E293B&color=8B5CF6&size=200&font-size=0.33`;
+                // Ensure credentials is an array for the join() method later
+                this.credentials = Array.isArray(credentials) ? credentials : [credentials];
+                
+                // Logic: If a filename is provided, assume it's in an 'images' folder.
+                this.image = imageFileName ? `mentor-images/${imageFileName}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=1E293B&color=8B5CF6&size=200&font-size=0.33`;
+                
+                this.linkedinUrl = linkedinUrl;
             }
         }
 
-        // Expanded Data Source: 10 Mentors with Image Links
-        // NOTE: Replace 'null' with the actual image URL string (e.g., "https://example.com/photo.jpg")
+        // Expanded Data Source: Mentors from CSV
         const mentorsData = [
             new MentorProfile(
-                "Kunal Shah", 
-                "Founder, CRED", 
+                "Vikram Anand Bhushan", 
+                "Co-Founder, Hypermine", 
                 [
-                    "Revolutionizing trust-based wealth management and credit in India.",
-                    "Advisor to Sequoia Capital and AngelList.",
-                    "One of India's most active angel investors with a keen eye for consumer behavior."
+                    "Founder with 11+ years of experience scaling blockchain venture, currently building privacy-first digital trust infrastructure through Hypermine."
                 ],
-               "https://www.livemint.com/lm-img/img/2025/07/06/original/3-0-77820093-Kunal-Shah-10-20190627-JM-0_1679797689961_1751802998668.JPG" // <--- PASTE IMAGE LINK HERE
+                "vikrambanand.jpeg",
+                "https://www.linkedin.com/in/vikrambanand/"
             ),
             new MentorProfile(
-                "Vidit Aatrey", 
-                "Founder, Meesho", 
+                "Ashish Kulkarni", 
+                "Founder, Founders' Psyche", 
                 [
-                    "Democratizing internet commerce for small businesses across Bharat.",
-                    "IIT Delhi Alumnus and Y Combinator graduate.",
-                    "Built a unicorn by empowering millions of female entrepreneurs."
+                    "Ex-CoFounder - FundEnable, MBA-IE Business School-Spain. Ex-Research Assistant - INSEAD, France. Brings strong experience of building startups and raising funds."
                 ],
-                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+                "Ashish_kulkarni.jpeg",
+                "https://www.linkedin.com/in/ashishkul/"
             ),
             new MentorProfile(
-                "Vijay Shekhar", 
-                "Founder, Paytm", 
+                "Meenal Sharma", 
+                "Ex-Founder, M&A Expert", 
                 [
-                    "The pioneer of the digital payments revolution in India.",
-                    "Delhi College of Engineering Alumnus.",
-                    "Built one of India's largest fintech ecosystems from scratch."
+                    "Working with one of the top consulting firms as TA - Mergers & Acquisitions. Holds strong expertise in Aromatherapy and essential oil blending."
                 ],
-                null // <--- PASTE IMAGE LINK HERE
+                "meenal.png",
+                "https://www.linkedin.com/in/meenalsharma8284/"
             ),
             new MentorProfile(
-                "Mekin M", 
-                "Founder, Udhyam", 
+                "Vaibhav Bhargava", 
+                "Salesforce Architect", 
                 [
-                    "Former Chief People Officer at Flipkart who built their early culture.",
-                    "Now focused on social entrepreneurship and grassroots learning.",
-                    "Passionate about unlocking human potential at scale."
+                    "Salesforce Architect at JLL with 15+ years of experience across JLL, PwC, PTC, and Amdocs, leading enterprise Salesforce architecture and digital transformation initiatives."
                 ],
-                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+                "vaibhav_bhargava.jpeg",
+                "https://www.linkedin.com/in/vaibhav-bhargava-0a1364a/"
             ),
             new MentorProfile(
-                "Deepinder Goyal", 
-                "Founder, Zomato", 
+                "Harsh Gupta", 
+                "PhD, Quantum Error Correction", 
                 [
-                    "Redefined food delivery and restaurant discovery in India.",
-                    "Known for obsession with design and customer experience.",
-                    "Successfully led Zomato to a massive public market debut."
+                    "Ph.D. scholar at IISER, Bhopal researching Quantum Error Correction in Measurement-Based Quantum Computing. M.Tech from NIT-Srinagar, prior industry experience at Infosys."
                 ],
-                null // <--- PASTE IMAGE LINK HERE
+                "harsh_gupta.jpeg",
+                "https://www.linkedin.com/in/harsh-gupta-aa3bbb99/"
             ),
             new MentorProfile(
-                "Ritesh Agarwal", 
-                "Founder, OYO", 
+                "Pavan Agarwal", 
+                "Founder, DD Cinemas", 
                 [
-                    "One of the world's youngest self-made billionaires.",
-                    "Thiel Fellow who transformed the global hospitality landscape.",
-                    "Scaled OYO to over 80 countries with sheer grit and execution."
+                    "Known as Cinema Man of UP-East. Founder - DD Cinema with 21+ multiplex screens. 20+ years in amla manufacturing (clients like Patanjali), operates an 8000 MT cold storage unit."
                 ],
-                null // <--- PASTE IMAGE LINK HERE
+                "pavan_dd.png",
+                "https://www.linkedin.com/in/pavan-agarwal-8353092/"
             ),
             new MentorProfile(
-                "Nithin Kamath", 
-                "Founder, Zerodha", 
+                "Upyukt Prakash", 
+                "Senior Principal Consultant", 
                 [
-                    "Bootstrapped India's largest stock broker without external funding.",
-                    "A trading titan who changed how Indians invest.",
-                    "Founder of Rainmatter, supporting fintech and climate startups."
+                    "Senior Principal Consultant with 18+ years of experience in project management, process transformation, and Lean Six Sigma, previously at TCS and Thales Avionics-USA."
                 ],
-                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+                "upyukt.png",
+                "https://www.linkedin.com/in/upyukt-prakash-mater-black-belt-six-sigma-0b821514/"
             ),
             new MentorProfile(
-                "Falguni Nayar", 
-                "Founder, Nykaa", 
+                "CA Moon Goel", 
+                "CA, Co-Founder - Vit Kushal", 
                 [
-                    "Former Investment Banker turned beauty commerce mogul.",
-                    "Built a profitable unicorn with a relentless focus on brand.",
-                    "A symbol of self-made success and female leadership in India."
+                    "20+ yrs work-ex in forensic accounting, internal audit, compliance, and tax advisory. Expertise in guiding startups for financial forecasting, valuation and cap table management."
                 ],
-                null // <--- PASTE IMAGE LINK HERE
+                "moongoel.jpeg",
+                "https://www.linkedin.com/in/moongoel/"
             ),
             new MentorProfile(
-                "Bhavish Aggarwal", 
-                "Founder, Ola", 
+                "Pawan Mishra", 
+                "Ex-Co-founder", 
                 [
-                    "Revolutionized urban mobility in India with Ola Cabs.",
-                    "Now leading India's EV revolution with Ola Electric.",
-                    "A master of scaling complex operations in tough markets."
+                    "Ex-Co-Founder of an ecommerce startup. Brings a strong foundation in building scalable consumer tech products. contributing to large-scale fintech and commerce platforms."
                 ],
-                null // <--- PASTE IMAGE LINK HERE
+                "pawan.jpeg",
+                "https://www.linkedin.com/in/pawan-mishra-2910/"
             ),
             new MentorProfile(
-                "Sanjeev Bikhchandani", 
-                "Founder, Info Edge", 
+                "CA Mahendra Tiwari", 
+                "CA, Partner", 
                 [
-                    "The Godfather of Indian Internet Startups (Naukri.com).",
-                    "Pioneered the consumer internet space in the 90s.",
-                    "Key investor behind Zomato and PolicyBazaar."
+                    "20+ yrs of work ex with expertise in startup valuation, Small Business Tax Preparation, Bookkeeping and Accounting."
                 ],
-                "https://pbs.twimg.com/profile_images/1634589820721967105/xPByluzg_400x400.jpg" // <--- PASTE IMAGE LINK HERE
+                "mahendra.png",
+                "https://www.linkedin.com/in/mahendra-tiwari-4a62b112/" 
+            ),
+            new MentorProfile(
+                "Akash Kansal", 
+                "Founder, Author", 
+                [
+                    "A FMS-Delhi passout, he brings with him 12+ yrs of expereince in building products , strategy at organisations like 99acre, Droom, Deloitte. His book 'The class of 2006' was launched by R.Madhavan. Currently building next Gen AI Products in B2B SAAS."
+                ],
+                "akash.jpeg",
+                "https://www.linkedin.com/in/akashkansal/" 
             )
         ];
 
         // Function to create card HTML
         function createMentorCard(mentor) {
-            // Join credentials into a cohesive paragraph
             const description = mentor.credentials.join(" ");
 
             return `
-                <div class="glass-card w-[400px] flex-shrink-0 rounded-2xl p-6 border border-functional-border hover:border-accent-violet transition duration-300 group flex flex-col mx-4 select-none h-full bg-bg-surface/50">
-                    <div class="flex items-start gap-4 mb-5">
-                        <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-br from-accent-blue to-accent-violet flex-shrink-0 shadow-lg shadow-accent-blue/20">
-                            <!-- Image Loaded Here -->
-                            <img src="${mentor.image}" alt="${mentor.name}" class="w-full h-full rounded-full object-cover bg-bg-main">
+                <div class="glass-card w-[300px] flex-shrink-0 rounded-2xl p-5 border border-functional-border hover:border-accent-violet transition duration-300 group flex flex-col mx-3 select-none h-full bg-bg-surface/50 relative">
+                    
+                    ${mentor.linkedinUrl ? `
+                    <a href="${mentor.linkedinUrl}" target="_blank" class="absolute top-4 right-4 text-text-secondary hover:text-[#0A66C2] transition-colors z-20" title="Connect on LinkedIn">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>` : ''}
+
+                    <div class="flex items-start gap-3 mb-4 pr-8">
+                        <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-br from-accent-blue to-accent-violet flex-shrink-0 shadow-lg shadow-accent-blue/20">
+                            <img src="${mentor.image}" alt="${mentor.name}" class="w-full h-full rounded-full object-cover bg-bg-main" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(mentor.name)}&background=1E293B&color=8B5CF6&size=200&font-size=0.33'">
                         </div>
-                        <div class="pt-1">
-                            <h3 class="text-xl font-bold text-white group-hover:text-accent-violet transition truncate w-56">${mentor.name}</h3>
-                            <p class="gradient-text text-sm font-bold uppercase tracking-wider truncate w-56">${mentor.title}</p>
+                        <div class="pt-1 flex-1 min-w-0">
+                            <h3 class="text-lg font-bold text-white group-hover:text-accent-violet transition leading-tight mb-1">${mentor.name}</h3>
+                            <p class="gradient-text text-xs font-bold uppercase tracking-wider line-clamp-2">${mentor.title}</p>
                         </div>
                     </div>
-                    <div class="flex-grow border-t border-functional-border/50 pt-4">
-                        <p class="text-text-secondary text-sm leading-relaxed font-light">
+                    <div class="flex-grow border-t border-functional-border/50 pt-3">
+                        <p class="text-text-secondary text-xs leading-relaxed font-light">
                             ${description}
                         </p>
                     </div>
@@ -203,14 +209,12 @@
             
             if (!row1Container || !row2Container) return;
 
-            // Logic: Split based on total length. 
-            // If length is odd (e.g., 11), Math.ceil(5.5) = 6. First row gets 6, Second gets 5.
             const splitIndex = Math.ceil(mentorsData.length / 2);
             
             const firstHalf = mentorsData.slice(0, splitIndex);
             const secondHalf = mentorsData.slice(splitIndex);
 
-            // Duplicate arrays to create seamless loop (Original + Copy)
+            // Duplicate arrays to create seamless loop
             const row1Content = [...firstHalf, ...firstHalf, ...firstHalf, ...firstHalf].map(createMentorCard).join('');
             const row2Content = [...secondHalf, ...secondHalf, ...secondHalf, ...secondHalf].map(createMentorCard).join('');
 
@@ -300,6 +304,14 @@
         .no-scrollbar {
             -ms-overflow-style: none;
             scrollbar-width: none;
+        }
+        
+        /* Line Clamp Utilities for Compatibility */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -468,7 +480,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: Mentors (Updated with Infinite Scroll) -->
+    <!-- Mentors Section -->
     <section id="mentors" class="py-24 bg-bg-surface border-y border-functional-border relative overflow-hidden">
         <!-- Background decorative elements -->
         <div class="absolute -left-20 top-1/4 w-80 h-80 bg-accent-blue/10 rounded-full blur-[80px]"></div>
@@ -486,7 +498,7 @@
                 
                 <!-- Row 1: Scroll Left -->
                 <div class="pause-on-hover relative flex overflow-hidden w-full">
-                     <!-- Inner Track -->
+                      <!-- Inner Track -->
                     <div id="scroll-row-1" class="flex animate-scroll-left w-max">
                         <!-- Content Injected via JS -->
                     </div>
@@ -494,9 +506,9 @@
 
                 <!-- Row 2: Scroll Right -->
                 <div class="pause-on-hover relative flex overflow-hidden w-full">
-                     <!-- Inner Track -->
+                      <!-- Inner Track -->
                     <div id="scroll-row-2" class="flex animate-scroll-right w-max">
-                         <!-- Content Injected via JS -->
+                          <!-- Content Injected via JS -->
                     </div>
                 </div>
 
@@ -671,7 +683,6 @@
     <section class="py-20 bg-black text-text-primary border-t border-functional-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                 <!-- <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">FOUNDER’S WORK & PROOF</h2> -->
                 <p class="text-text-secondary max-w-3xl mx-auto">
                     This school is not built on theory.<br>
                     It is built on lived experience, scars, and lessons earned the hard way.
@@ -788,10 +799,9 @@
                     <p class="mt-2 text-sm">Stay tuned for more details …</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-twitter text-xl"></i></a>
-                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-linkedin text-xl"></i></a>
-                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-instagram text-xl"></i></a>
-                    <a href="#" class="hover:text-accent-blue transition"><i class="fab fa-youtube text-xl"></i></a>
+                    <a href="https://x.com/The_startup_sch" target="_blank" class="hover:text-accent-blue transition"><i class="fab fa-x-twitter text-xl"></i></a>
+                    <a href="https://in.linkedin.com/company/the-startup-school-2026" target="_blank" class="hover:text-accent-blue transition"><i class="fab fa-linkedin text-xl"></i></a>
+                    <a href="https://www.instagram.com/the__startup__school/?hl=en" target="_blank" class="hover:text-accent-blue transition"><i class="fab fa-instagram text-xl"></i></a>
                 </div>
             </div>
             <div class="mt-8 pt-8 border-t border-functional-border text-center text-sm">
